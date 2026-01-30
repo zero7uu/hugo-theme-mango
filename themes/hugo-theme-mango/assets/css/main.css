@@ -1,0 +1,669 @@
+/* ========== 1. 全局重置 + 页面居中核心 ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0 16px;
+  text-align: left;
+  font-family: 'Noto Sans Mono CJK SC', 'Consolas', 'Monaco', '微软雅黑 Mono', 'Menlo', monospace;
+  height: 100%;
+  min-height: 100vh; /* 确保body至少占满整个视口高度 */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body > main {
+  flex: 1;
+  padding: 40px 0;
+}
+
+body > footer {
+  margin-top: auto;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ========== 2. Header 样式（导航+头像+标题） ========== */
+.header-main-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 24px 0;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* 头像容器 */
+.header-avatar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 头像样式优化 */
+.header-avatar-container .header-avatar-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.header-avatar-container .header-avatar-img:hover {
+  transform: scale(1.05);
+}
+
+/* 右侧内容容器 */
+.header-right-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  justify-content: center;
+  flex: 1;
+}
+
+/* 站点名称样式 */
+.header-site-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 0 16px;
+  color: #222;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+/* ========== 3. 导航菜单样式 ========== */
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav {
+  position: relative;
+  z-index: 999;
+  width: 100%;
+}
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 水平菜单容器 */
+.header-menu-horizontal {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: auto;
+  background-color: #fff;
+  padding: 0;
+  margin: 0;
+}
+
+/* RSS订阅样式 */
+.rss-item {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rss-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
+.rss-icon {
+  font-size: 16px;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+/* 菜单项样式 */
+.header-menu-horizontal .menu-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  list-style: none;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* 菜单链接样式 */
+.header-menu-horizontal .menu-link {
+  color: #666;
+  text-decoration: none;
+  padding: 8px 14px;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 500;
+  border-radius: 6px;
+  background-color: transparent;
+  margin: 0;
+}
+
+/* 活跃链接和悬停效果 */
+.header-menu-horizontal .menu-link--active,
+.header-menu-horizontal .menu-link:hover {
+  color: #f59e0b;
+  background-color: rgba(245, 158, 11, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15);
+}
+
+/* 菜单分隔线 */
+.menu-divider {
+  color: #e0e0e0;
+  margin: 0 6px;
+  pointer-events: none;
+  font-weight: 300;
+  opacity: 0.6;
+  font-size: 16px;
+}
+
+/* 移除最后一个分隔线 */
+.header-menu-horizontal .menu-item:last-child .menu-divider {
+  display: none;
+}
+
+/* ========== 4. 链接样式 ========== */
+a {
+  color: #0066cc;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #f59e0b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ========== 5. 文章列表样式 ========== */
+.articles-list {
+  margin: 0;
+  padding: 0;
+}
+
+.articles-title {
+  font-size: 1.3rem;
+  margin: 30px 0 20px 0;
+  color: #ff8c00;
+  font-weight: bold;
+}
+
+.article-item {
+  margin: 6px 0;
+  padding: 0;
+  width: 100%;
+  font-size: 14.3px;
+}
+
+.article-date {
+  margin-right: 10px;
+  color: #666;
+  min-width: 90px;
+}
+
+.article-dash {
+  margin-right: 10px;
+  color: #666;
+}
+
+/* ========== 6. 页面对齐样式 ========== */
+.home-page-container,
+.taxonomy-page-container,
+.term-page-container,
+.page-general-container {
+  width: 100%;
+  text-align: left;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* ========== 7. 文章元数据样式 ========== */
+.article-meta {
+  margin: 8px 0 24px 0;
+  padding: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  background-color: transparent;
+}
+
+.article-publish-date {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* ========== 7. 内容区域样式 ========== */
+.page-content {
+  font-size: 13.3px;
+  color: #333;
+  line-height: 1.7;
+  background-color: transparent;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.page-content p {
+  margin-bottom: 16px;
+  text-align: justify;
+  background-color: transparent;
+  color: #333;
+}
+
+/* ========== 8. 标题样式 ========== */
+h1 {
+  font-size: 1.8rem;
+  margin: 24px 0;
+  color: #ff8c00;
+  font-weight: bold;
+  text-align: left;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #ff8c00;
+  margin: 32px 0 16px 0;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: #ff8c00;
+  margin: 24px 0 12px 0;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1.1rem;
+  color: #ff8c00;
+  margin: 20px 0 10px 0;
+  font-weight: bold;
+}
+
+h5, h6 {
+  font-size: 1rem;
+  color: #ff8c00;
+  margin: 16px 0 8px 0;
+  font-weight: bold;
+}
+
+/* ========== 9. 列表样式 ========== */
+.page-content ul,
+.page-content ol {
+  margin-bottom: 8px;
+  padding-left: 24px;
+}
+
+.page-content ul li {
+  list-style-type: disc;
+  margin-bottom: 8px;
+}
+
+.page-content ol li {
+  list-style-type: decimal;
+  margin-bottom: 8px;
+}
+
+/* 任务列表样式 */
+.page-content ul.contains-task-list li {
+  list-style-type: none;
+  margin-left: -20px;
+}
+
+.page-content .task-list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.page-content .task-list-item input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.1);
+}
+
+/* ========== 10. 引用样式 ========== */
+.page-content blockquote {
+  border-left: 4px solid #00cc66;
+  padding: 12px 16px 12px 24px;
+  margin: 16px 0 8px 0;
+  color: #ff3333;
+  font-style: normal;
+  position: relative;
+  background-color: #fafafa;
+  border-radius: 0 8px 8px 0;
+}
+
+
+
+/* ========== 11. 代码块样式 ========== */
+/* 代码块容器 */
+.page-content .highlight {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0 8px 0;
+  background-color: #ffffff;
+  border: 1px solid #a9a6a6;
+  font-family: 'Consolas', 'Monaco', 'Menlo', 'Courier New', monospace;
+}
+
+/* 代码块内容 */
+.page-content pre {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 0;
+  font-family: 'Consolas', 'Monaco', 'Menlo', 'Courier New', monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  font-weight: normal;
+}
+
+/* 行内代码 */
+.page-content code {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: 'Consolas', 'Monaco', 'Menlo', 'Courier New', monospace;
+  font-size: 12.5px;
+  color: #d63384;
+  font-weight: normal;
+}
+
+/* 代码块内的代码 */
+.page-content pre code {
+  background-color: transparent;
+  padding: 0;
+  color: #333333;
+  font-size: 12.5px;
+  font-weight: normal;
+}
+
+/* 覆盖内联样式，确保代码块显示为白色背景 */
+.page-content .highlight pre {
+  background-color: #f8f8f2 !important;
+  color: #333333 !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 代码块容器样式 */
+.page-content .highlight {
+  background-color: #f8f8f2 !important;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+/* 代码块内容样式 */
+.page-content pre {
+  padding: 1.2rem;
+  overflow-x: auto;
+  font-family: 'Consolas', 'Monaco', 'Menlo', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ========== 12. 表格样式 ========== */
+.page-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 16px 0;
+}
+
+.page-content table th,
+.page-content table td {
+  border: 1px solid #eee;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.page-content table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* ========== 13. 图片样式 ========== */
+/* 单张图片样式 */
+.page-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+  border-radius: 4px;
+}
+
+/* 图片带图注容器 */
+.image-with-caption {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem auto;
+  width: 80%;
+  max-width: 800px;
+  overflow: hidden;
+}
+
+/* 带图注的图片样式 */
+.image-with-caption img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: fill;
+  margin: 0;
+  border-radius: 4px;
+}
+
+/* 图注样式 */
+.image-caption {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  margin-top: 8px;
+  padding: 0 16px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* 适配手机端 */
+@media (max-width: 768px) {
+  .image-with-caption {
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+/* ========== 14. 分隔线样式 ========== */
+.page-content hr {
+  border: none;
+  border-top: 1px solid #ff8c00;
+  margin: 40px 0;
+  opacity: 0.7;
+}
+
+/* ========== 15. 目录样式 ========== */
+.table-of-contents {
+  margin: 24px 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.toc-title {
+  font-size: 1.2rem;
+  color: #ff8c00;
+  margin: 0 0 12px 0;
+  padding: 0;
+  border-bottom: none;
+  font-weight: bold;
+}
+
+.table-of-contents ul {
+  margin: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.table-of-contents ul ul {
+  margin: 4px 0 4px 16px;
+  padding-left: 0;
+}
+
+.table-of-contents ul ul ul {
+  margin: 4px 0 4px 16px;
+  padding-left: 0;
+}
+
+.table-of-contents ul ul ul ul {
+  margin: 4px 0 4px 16px;
+  padding-left: 0;
+}
+
+.table-of-contents li {
+  margin-bottom: 6px;
+  list-style-type: none;
+  line-height: 1.1;
+}
+
+.table-of-contents a {
+  color: rgb(204, 102, 17);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-size: 13.3px;
+  display: block;
+  padding: 2px 0;
+}
+
+.table-of-contents a:hover {
+  color: rgb(230, 120, 20);
+  text-decoration: none;
+}
+
+/* 二级目录项 */
+.table-of-contents > nav > ul > li > a {
+  font-weight: normal;
+  color: rgb(204, 102, 17);
+  padding-left: 0;
+}
+
+/* 三级目录项 */
+.table-of-contents > nav > ul > li > ul > li > a {
+  font-size: 13.3px;
+  color: rgb(204, 102, 17);
+  padding-left: 12px;
+  font-weight: normal;
+}
+
+/* 四级目录项 */
+.table-of-contents > nav > ul > li > ul > li > ul > li > a {
+  font-size: 13.3px;
+  color: rgb(204, 102, 17);
+  padding-left: 24px;
+  font-weight: normal;
+}
+
+/* 五级目录项 */
+.table-of-contents > nav > ul > li > ul > li > ul > li > ul > li > a {
+  font-size: 13.3px;
+  color: rgb(204, 102, 17);
+  padding-left: 36px;
+  font-weight: normal;
+}
+
+/* ========== 9. 分类样式 ========== */
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.category-item {
+  padding: 8px 16px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.category-item:hover {
+  background: #e5e5e5;
+  color: #f59e0b;
+  text-decoration: none;
+}
+
+.term-articles {
+  margin-top: 20px;
+}
+
+.term-article-item {
+  margin: 10px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+}
+
+.term-date {
+  margin-right: 15px;
+  color: #666;
+  min-width: 90px;
+}
+/* 限制所有Markdown中的图片显示尺寸 */
+.markdown-content img {
+  /* 核心：最大宽度不超过容器，高度自动 */
+  max-width: 800px;
+  height: auto;
+  /* 可选：居中+间距，适配主题样式 */
+  display: block;
+  margin: 1.5rem auto;
+  /* 可选：轻微圆角，更美观 */
+  border-radius: 4px;
+}
+
+/* 适配手机端：宽度100% */
+@media (max-width: 768px) {
+  .markdown-content img {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+}

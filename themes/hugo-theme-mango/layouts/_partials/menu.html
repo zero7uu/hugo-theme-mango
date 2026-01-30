@@ -1,0 +1,73 @@
+{{- /*
+Renders a menu for the given menu ID.
+
+@context {page} page The current page.
+@context {string} menuID The menu ID.
+
+@example: {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+*/}}
+
+{{- $page := .page }}
+{{- $menuID := .menuID }}
+
+{{- with index site.Menus $menuID }}
+  <nav class="main-nav"> <!-- 保留此类名 -->
+    <!-- 1. 修改：horizontal-menu → header-menu-horizontal -->
+    <ul class="menu-list header-menu-horizontal"> 
+      {{- /* 新增：定义菜单总数，用于分隔符判断 */}}
+      {{- $total := len . }}
+      {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" . "total" $total "index" 0) }}
+      <!-- RSS 订阅链接 -->
+      {{ if $total }}
+        <span class="menu-divider"> | </span>
+      {{ end }}
+      <li class="menu-item rss-item">
+        <a href="{{ "/feed.xml" | relURL }}" class="menu-link rss-link" target="_blank" rel="noopener">
+          <span class="rss-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 17 16"><g fill="currentColor" fill-rule="evenodd"><path d="M1 3c7.355 0 13 5.593 13 12.968h3C17 7.198 9.747 0 1 0z"/><path d="M1.052 8.99c4.008 0 6.957 2.9 6.957 6.919h2.95c0-5.346-4.578-9.847-9.907-9.847zm.01 6.91h3.91c0-2.491-1.43-3.797-3.91-3.82c-.014 0 0 3.82 0 3.82"/></g></svg></span> RSS
+        </a>
+      </li>
+    </ul>
+  </nav>
+{{- end }}
+
+{{- define "_partials/inline/menu/walk.html" }}
+  {{- $page := .page }}
+  {{- $total := .total }} <!-- 接收总数参数 -->
+  {{- $index := .index }} <!-- 接收索引参数 -->
+  {{- range $i, $entry := .menuEntries }}
+    {{- $currentIndex := add $index $i }} <!-- 计算当前项索引 -->
+    {{- $attrs := dict "href" .URL "class" "menu-link" }} 
+    {{- if $page.IsMenuCurrent .Menu . }}
+      {{- $attrs = merge $attrs (dict "class" "menu-link menu-link--active" "aria-current" "page") }}
+    {{- else if $page.HasMenuCurrent .Menu .}}
+      {{- $attrs = merge $attrs (dict "class" "menu-link menu-link--ancestor" "aria-current" "true") }}
+    {{- end }}
+    {{- $name := .Name }}
+    {{- with .Identifier }}
+      {{- with T . }}
+        {{- $name = . }}
+      {{- end }}
+    {{- end }}
+    <li class="menu-item"> 
+      <a
+        {{- range $k, $v := $attrs }}
+          {{- with $v }}
+            {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+          {{- end }}
+        {{- end -}}
+      >{{ $name }}</a>
+
+      <!-- 2. 新增分隔符：仅非最后一项显示，不改动原有逻辑 -->
+        {{- if and $total (lt (add $currentIndex 1) $total) (not .Children) }}
+          <span class="menu-divider"> | </span>
+        {{- end }}
+
+      {{- with .Children }}
+        <!-- 3. 修改：submenu-list → header-submenu-list（可选，不影响主导航） -->
+        <ul class="header-submenu-list"> 
+          {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
+        </ul>
+      {{- end }}
+    </li>
+  {{- end }}
+{{- end }}

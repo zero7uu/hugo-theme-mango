@@ -1,0 +1,22 @@
+{{ define "main" }}
+  <div class="page-general-container">
+    <h1>{{ .Title }}</h1>
+    
+    {{ with .Date }}
+      <div class="article-meta">
+        <span class="article-publish-date">发布时间：{{ .Format "2006-01-02" }}</span>
+      </div>
+    {{ end }}
+    
+    {{ if and .TableOfContents (eq .Params.toc true) }}
+      <div class="table-of-contents">
+        <h2 class="toc-title">目录</h2>
+        {{ .TableOfContents }}
+      </div>
+    {{ end }}
+    
+    <div class="page-content">
+      {{ .Content }}
+    </div>
+  </div>
+{{ end }}

@@ -1,0 +1,12 @@
+<div class="header-main-container">
+  <!-- 左侧：头像 -->
+  <div class="header-avatar-container">
+    <img src="{{ .Site.Params.avatar | default "/avatar.jpg" }}" alt="头像" class="header-avatar-img">
+  </div>
+
+  <!-- 右侧：名称 + 导航菜单（垂直排列） -->
+  <div class="header-right-content">
+    <h1 class="header-site-name">{{ .Site.Params.authorName | default .Site.Title }}</h1>
+    {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+  </div>
+</div>

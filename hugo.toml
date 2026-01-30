@@ -1,0 +1,11 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+
+
+theme = 'hugo-theme-mango'
+
+[params]
+  authorName = "zero7 ｜ 零柒" 
+  avatar = '/static/mango.png'
+  favicon = '/static/favicon.ico'

@@ -1,0 +1,25 @@
+{{ define "main" }}
+  <!-- 1. Home 页专属父容器（样式隔离核心） -->
+  <div class="home-page-container">
+    <!-- 使用 .Content 显示 index.md 的内容，并应用 speaking-title 样式 -->
+    <div class="speaking-title">
+      {{ .Content }}
+    </div>
+    
+    <!-- 文章列表容器 -->
+    <div class="articles-list">
+      <!-- 新增标题：Articles -->
+      <h2 class="articles-title">Articles</h2>
+      
+      {{ $allPages := (sort (where site.RegularPages "Section" "posts") "Date" "desc") }}
+      {{ $featuredPages := where $allPages ".Params.featured" "eq" true }}
+      {{ range $featuredPages }}
+        <div class="article-item">
+          <span class="article-date">{{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}</span>
+          <span class="article-dash">-</span>
+          <a href="{{ .RelPermalink }}" class="article-title">{{ .LinkTitle }}</a>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+{{ end }}

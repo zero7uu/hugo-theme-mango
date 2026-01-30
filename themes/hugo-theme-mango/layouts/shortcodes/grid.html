@@ -1,0 +1,19 @@
+{{ $cols := .Get "cols" | default "2" }}
+
+<div class="image-grid image-grid-cols-{{ $cols }}">
+  {{ range split .Inner "\n" }}
+    {{ if . }}
+      {{ $parts := split . "|" }}
+      {{ $src := index $parts 0 }}
+      {{ $alt := index $parts 1 | default "" }}
+      {{ $caption := index $parts 2 | default "" }}
+      
+      <div class="image-grid-item">
+        <img src="{{ $src }}" alt="{{ $alt }}">
+        {{ if $caption }}
+          <div class="image-caption">{{ $caption }}</div>
+        {{ end }}
+      </div>
+    {{ end }}
+  {{ end }}
+</div>

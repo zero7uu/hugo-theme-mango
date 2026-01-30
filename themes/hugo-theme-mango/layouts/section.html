@@ -1,0 +1,19 @@
+{{ define "main" }}
+  <div class="home-page-container">
+    
+    <div class="articles-list">
+      {{ $sortedPages := sort .Pages "Date" "desc" }}
+      {{ $grouped := $sortedPages.GroupByDate "2006" }}
+      {{ range $grouped }}
+        <h2 class="articles-title">{{ .Key }}</h2>
+        {{ range .Pages }}
+          <div class="article-item">
+            <span class="article-date">{{ with .Date }}{{ .Format "2006-01-02" }}{{ end }}</span>
+            <span class="article-dash">-</span>
+            <a href="{{ .RelPermalink }}" class="article-title">{{ .LinkTitle }}</a>
+          </div>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+{{ end }}

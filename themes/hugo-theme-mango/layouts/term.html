@@ -1,0 +1,13 @@
+{{ define "main" }}
+  <div class="term-page-container">
+    <h1>分类：{{ .Title }}</h1>
+    <div class="term-articles">
+      {{ range .Pages }}
+        <div class="term-article-item">
+          <span class="term-date">{{ .Date.Format "2006-01-02" }}</span>
+          <a href="{{ .RelPermalink }}" class="term-title">{{ .LinkTitle }}</a>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+{{ end }}

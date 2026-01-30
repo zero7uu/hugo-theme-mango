@@ -1,0 +1,49 @@
+[menus]
+  [[menus.main]]
+    name = 'Home'
+    pageRef = '/'
+    weight = 10
+
+  [[menus.main]]
+    name = 'Archive'
+    pageRef = '/posts/'
+    weight = 20
+
+  [[menus.main]]
+    name = "Tag"
+    pageRef = "/tags/"  
+    weight = 30
+
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about/"       
+    weight = 40
+
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = '0.146.0'
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
+
+[outputFormats]
+  [outputFormats.RSS]
+    mediaType = "application/rss+xml"
+    baseName = "feed"
+    isPlainText = false
+    isHTML = false
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      hardWraps = true
+      unsafe = true
+  [markup.highlight]
+    style = 'monokailight'
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 5
